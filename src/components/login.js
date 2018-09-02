@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
 
@@ -7,7 +8,8 @@ import { login } from '../actions/authActions';
 
 //styles
 import '../styles/login.css';
-import 'bootstrap3/dist/css/bootstrap.css' 
+import 'bootstrap3/dist/css/bootstrap.css';
+
 class Login extends Component{
 	constructor(props){
 		super(props);
@@ -34,7 +36,7 @@ class Login extends Component{
 		});
 		this.props.login(this.state).then(
 			(res) => {
-				this.context.router.push('/');
+				return <Redirect to='/'/>
 				this.setState({
 					isLoading: false
 				});

@@ -4,15 +4,14 @@ import {Button, Col, Row, Glyphicon} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-//actions
-import {selectLaptop} from '../actions/index';
-
 //reducers
 import '../reducers/store';
 
 //styles
 import 'bootstrap3/dist/css/bootstrap.css';
 import '../styles/shop.css'
+
+var laptops = [];
 
 class Shop extends Component{
 	constructor(props){
@@ -23,6 +22,7 @@ class Shop extends Component{
 
 		this.changeLenovo = this.changeLenovo.bind(this);
 		this.changeSamsung = this.changeSamsung.bind(this);
+		//this.handleAdd = this.handleAdd.bind(this);
 	}
 
 	changeLenovo(){
@@ -37,6 +37,17 @@ class Shop extends Component{
 		})
 	}
 
+	handleAdd(item){
+		laptops.push(item);
+		var laptop = [];
+		for(let i=0; i<laptops.length; i++){
+			if(laptop.indexOf(laptops[i]) === -1){
+				laptop.push(laptops[i])
+			}
+		}
+		localStorage.setItem('Laptops', JSON.stringify(laptop));
+	}
+
 	render(){
 		var {items} = this.state;
 		items = items.map((item, index)=>{
@@ -48,7 +59,7 @@ class Shop extends Component{
 						<Row>{item.name}</Row>
 					</Col>
 					<Col xs={2} xsOffset={2} className='cartLink'>
-						<Button onClick={()=>{this.props.selectLaptop(item)}}><Glyphicon glyph='shopping-cart'/></Button>
+						<Button onClick={()=>{this.handleAdd(item)}}><Glyphicon glyph='shopping-cart'/></Button>
 					</Col>		
 				</Col>
 			)
@@ -76,13 +87,8 @@ class Shop extends Component{
 function mapStateToProps(state){
 	return{
 	lenovo : state.lenovo,
-	samsung : state.samsung 
+	samsung : state.samsung
 	};
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({selectLaptop: selectLaptop}, dispatch)
-}
-
-
-export default connect (mapStateToProps, mapDispatchToProps)(Shop);
+export default connect (mapStateToProps)(Shop);

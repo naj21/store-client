@@ -5,7 +5,6 @@ import {Col, Row, Button} from 'react-bootstrap';
 
 
 //actions
-import {selectLaptop} from '../actions/index';
 import { order } from '../actions/orderActions';
 
 //components
@@ -18,59 +17,51 @@ import '../reducers/store'
 import 'bootstrap3/dist/css/bootstrap.css';
 import '../styles/cart.css'
 
-var laptops = [],
-		laptop=[];
-
 class Cart extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			name: laptop
+			cart: []
 		}
 
 		this.handleOrder = this.handleOrder.bind(this);
 	}
 
 	handleOrder(){
+		let cart = this.state.cart;
+		cart.forEach(()=>{
 		this.props.order(this.state.cart)
+		})
+		//localStore.getProxy().clear()
 	}
 
-	componentDidMount(item){
-	if (!this.props.cartLaptops) {
-		return null
-		}
-		this.list(this.props.cartLaptops)
-	}
-
-	list(item){
-		laptops.push(item);
-		laptop = [];
-		for(let i=0; i<laptops.length; i++){
-			if(laptop.indexOf(laptops[i]) === -1){
-				laptop.push(laptops[i])
-			}
-		}
+	componentWillMount(item){
 		this.setState(
 			{
-			 cartItems : laptop
+			 cart : JSON.parse(localStorage.getItem('Laptops'))
 			}
 		)
 	}
 
 	render(){
 		const user= this.props.users.emailAddress
-		var {cart}= this.state
-		cart = laptop.map((item, index)=>{
+		var {cart}= this.state;
+		if(cart != null){
+			var amount = cart.reduce(
+				(sum, current)=>{
+					return sum + current.price;
+				},0
+				)
+
+
+		cart = cart.map((item, index)=>{
 			return(
 				<CartItems item={item} key={index}/>
 			)
 		})
 
-		var amount = laptop.reduce(
-			(sum, current)=>{
-				return sum + current.price;
-			},0
-			)
+		}
+
 		return(
 			<div className='top'>
 				<h2>Shopping Cart</h2>
@@ -106,14 +97,13 @@ class Cart extends Component{
 
 function mapStateToProps(state){
 	return {
-	cartLaptops: state.cartLaptops,
 	users: state.users
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		order: order, 
+		order: order
 	},
 		dispatch)
 }

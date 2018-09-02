@@ -59,6 +59,7 @@ const routes = [
 
 const Main = ()=>{
 	return(
+		<Provider store={store}>
 		<Router>
 			<Grid fluid={true} className='main'>
 				<Row>
@@ -66,7 +67,6 @@ const Main = ()=>{
 						<SideNav/>
 					</Col>
 					<Col sm={8} md={9}>
-						<Provider store={store}>
 							<div>
 								{routes.map((route, index)=>(
 									<Route
@@ -77,7 +77,6 @@ const Main = ()=>{
 									/>
 								))}
 							</div>
-						</Provider>
 					</Col>
 				</Row>
 				<Row>
@@ -88,7 +87,7 @@ const Main = ()=>{
 				</Row>
 				</Grid>	
 			</Router>
-		
+		</Provider>
 		)
 }
 
