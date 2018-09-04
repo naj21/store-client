@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route, Redirect} from 'react-router-dom';
 import {Row, Col, Form, Button, FormGroup, FormFeedback, FormControl, InputGroup} from 'react-bootstrap'
 
 //actions
@@ -12,6 +12,8 @@ import { addFlashMessage } from '../actions/flashMessages.js';
 import '../styles/register.css';
 import 'bootstrap3/dist/css/bootstrap.css';
 
+var match;
+
 class Register extends Component{
 	constructor(props){
 		super(props);
@@ -21,14 +23,13 @@ class Register extends Component{
 				firstName: '',
 				lastName: '',
 				emailAddress: '',
-				country: '',
-				state: '',
 				address: '',
 				phone: '',
 				password: '',
 				passwordConfirmation: '',
 		        errors: {},
-		        isLoading: false
+		        isLoading: false,
+		        redirect: false
 		}
 	}
 
@@ -44,23 +45,42 @@ class Register extends Component{
 			errors: {}, 
 			isLoading: true 
 		});
-      	this.props.userSignupRequest(this.state).then(
-        () => {
-          this.props.addFlashMessage({
-            type: 'success',
-            text: 'You signed up successfully. Welcome!'
-          });
-          this.setState({ 
-        	isLoading: false })
-        },
-        (err) => this.setState({ 
-        	errors: err.response.data, 
-        	isLoading: false })
-      );
+		if(this.state.password ===this.state.passwordConfirmation){
+	      	this.props.userSignupRequest(this.state).then(
+	        () => {
+	          this.props.addFlashMessage({
+	            type: 'success',
+	            text: 'You signed up successfully. Welcome!'
+	          });
+	          this.setState({ 
+	        	isLoading: false,
+	        	redirect: true  })
+	        },
+	        (err) => {
+	        	this.setState({ 
+	        	errors: err.response.data.details, 
+	        	isLoading: false,
+	        	});
+	        	this.props.addFlashMessage({
+	            type: 'error',
+	            text: this.state.errors
+	          });
+	    	}
+	      );
+      }
+      else{
+      	match = 'Passwords do not match';
+      	this.setState({ 
+	        	isLoading: false,
+	        })
+      }
 	}
 
 	render(){
 		const { errors, isLoading } = this.state;
+		if(this.state.redirect){
+			return <Redirect to = '/login'/>
+		}
 		return(
 			<div className='top'>
 				<Form action='http://localhost:1337/signup' method='POST' className='login' onSubmit={this.onSubmit}>
@@ -81,18 +101,6 @@ class Register extends Component{
 						<InputGroup>
 							<InputGroup.Addon>@</InputGroup.Addon>
 							<FormControl type='email' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)}/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Country</InputGroup.Addon>
-							<FormControl type='text' name='country' value={this.state.country} onChange={(e)=>this.onChange.call(this, e)}/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>State</InputGroup.Addon>
-							<FormControl type='text' name='state' value={this.state.state} onChange={(e)=>this.onChange.call(this, e)}/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
@@ -119,6 +127,7 @@ class Register extends Component{
 							<FormControl type='password' name='passwordConfirmation' value={this.state.passwordConfirmation} onChange={(e)=>this.onChange.call(this, e)}/>
 						</InputGroup>
 					</FormGroup>
+					<p>{match}</p>
 					<FormGroup>
 						<InputGroup className='submit'>
 							<FormControl type='submit' value='Register' disabled={isLoading}/>

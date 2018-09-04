@@ -7,6 +7,7 @@ import store from '../reducers/store';
 
 //actions
 import { logout } from '../actions/authActions';
+import { deleteAllFlashMessage } from '../actions/flashMessages';
 
 //components
 import FlashMessageList from './flash/FlashMessagesList';
@@ -15,10 +16,23 @@ import FlashMessageList from './flash/FlashMessagesList';
 import '../styles/sideNav.css'
 import 'bootstrap3/dist/css/bootstrap.css';
 
+var count = 0;
+
 class SideNav extends Component{
 	handleLogout(){
 		this.props.logout();
 		<Redirect to='home'/>
+	}
+
+	componentWillMount(){
+		let number = JSON.parse(localStorage.getItem('Laptops'));
+		if (number !== null){
+			count = number.length;
+		}
+	}
+
+	handleFlash(){
+		this.props.deleteAllFlashMessage();
 	}
 
 	render(){
@@ -32,12 +46,12 @@ class SideNav extends Component{
 			<div className='sideNav'>
 				<h1 className='logo'><Link to='/'>Rayn</Link></h1>
 				<div className='links'>
-					<pre>{fname} {lname}</pre>
+					<pre>{fname}  {lname}</pre>
 	
 					<ul>
-						<li><Link to='/register'>REGISTER / LOGIN</Link></li>
-						<li><Link to='/shop'>SHOP</Link></li>
-						<li><Link to='/cart'>CART</Link></li>
+						<li><Link to='/register' onClick={()=>{this.handleFlash}}>REGISTER / LOGIN</Link></li>
+						<li><Link to='/shop' onClick={()=>{this.handleFlash}}>SHOP</Link></li>
+						<li><Link to='/cart' onClick={()=>{this.handleFlash}}>CART ({count})</Link></li>
 						{logout}
 						<Provider store={store}><FlashMessageList/></Provider>
 					</ul>
@@ -56,4 +70,4 @@ class SideNav extends Component{
     };
   }
 
-  export default connect(mapStateToProps, {logout})(SideNav);
+  export default connect(mapStateToProps, {logout, deleteAllFlashMessage})(SideNav);

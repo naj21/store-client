@@ -5,6 +5,7 @@ import {Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
 
 //actions
 import { login } from '../actions/authActions';
+import { addFlashMessage } from '../actions/flashMessages.js';
 
 //styles
 import '../styles/login.css';
@@ -18,6 +19,7 @@ class Login extends Component{
 				password: '',
 				errors : {},
 				isLoading : false,
+				redirect : false
 		}
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -36,21 +38,30 @@ class Login extends Component{
 		});
 		this.props.login(this.state).then(
 			(res) => {
-				return <Redirect to='/'/>
 				this.setState({
-					isLoading: false
+					isLoading: false,
+					redirect: true
 				});
 			},
-			(err) => this.setState({
-				errors : err.response.data.errors,
+			(err) => {
+				this.setState({
+				errors : err.response.data.details,
 				isLoading : false
-			})
+			});
+			this.props.addFlashMessage({
+            type: 'error',
+            text: this.state.errors
+          });
+			}
 		)
 	}
 
 	render(){
 		const user= this.props.users.emailAddress
 		const { errors, emailAddress, password, isLoading } = this.state;
+		if(this.state.redirect){
+			return <Redirect to = '/shop'/>
+		}
 		return(
 			<div className='top '>
 				<Form action='http://localhost:1337/signin' method='POST' className='login' onSubmit={this.onSubmit}>
@@ -84,4 +95,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect((mapStateToProps), { login })(Login);
+export default connect((mapStateToProps), { login, addFlashMessage })(Login);

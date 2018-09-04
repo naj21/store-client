@@ -20,7 +20,7 @@ export function logout() {
 
 export function login(data) {
   return dispatch => {
-    return axios.post('http://localhost:1337/signin', data).then(res => {
+    return window.axios.post('http://localhost:1337/signin', data).then(res => {
       const token = res.data.token;
       if(token !== 'undefined'){
       localStorage.setItem('jwtToken', token);
