@@ -17,7 +17,6 @@ class Login extends Component{
 		this.state = {
 				emailAddress: '',
 				password: '',
-				errors : {},
 				isLoading : false,
 				redirect : false
 		}
@@ -42,15 +41,18 @@ class Login extends Component{
 					isLoading: false,
 					redirect: true
 				});
+				this.props.addFlashMessage({
+	            type: 'success',
+	            text: res.data.message
+	          });
 			},
 			(err) => {
 				this.setState({
-				errors : err.response.data.details,
 				isLoading : false
 			});
 			this.props.addFlashMessage({
             type: 'error',
-            text: this.state.errors
+            text: err.data.message
           });
 			}
 		)
@@ -58,7 +60,7 @@ class Login extends Component{
 
 	render(){
 		const user= this.props.users.emailAddress
-		const { errors, emailAddress, password, isLoading } = this.state;
+		const { emailAddress, password, isLoading } = this.state;
 		if(this.state.redirect){
 			return <Redirect to = '/shop'/>
 		}
@@ -69,13 +71,13 @@ class Login extends Component{
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>@</InputGroup.Addon>
-							<FormControl type='text' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
+							<FormControl type='text' name='emailAddress' value={emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Password</InputGroup.Addon>
-							<FormControl type='password' name='password' value={this.state.password} onChange={(e)=>this.onChange.call(this, e)} required/>
+							<FormControl type='password' name='password' value={password} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>

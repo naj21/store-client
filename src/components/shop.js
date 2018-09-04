@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StaticRouter as Router} from 'react-router-dom';
 import {Button, Col, Row, Glyphicon} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 //reducers
 import '../reducers/store';
@@ -53,7 +52,7 @@ class Shop extends Component{
 		items = items.map((item, index)=>{
 			return(
 				<Col sm={6} lg={4} className='items'>
-					<img src={item.image}/>
+					<img src={item.image} alt={item.name}/>
 					<Col xs={8} className='itemName'>
 						<Row>₦{item.price}</Row>
 						<Row>{item.name}</Row>

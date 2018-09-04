@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {Provider} from 'react-redux';
@@ -49,7 +49,7 @@ class SideNav extends Component{
 					<pre>{fname}  {lname}</pre>
 	
 					<ul>
-						<li><Link to='/register' onClick={()=>{this.handleFlash}}>REGISTER / LOGIN</Link></li>
+						<li><Link to='/register' onClick={()=>{this.handleFlash}}> REGISTER </Link></li>
 						<li><Link to='/shop' onClick={()=>{this.handleFlash}}>SHOP</Link></li>
 						<li><Link to='/cart' onClick={()=>{this.handleFlash}}>CART ({count})</Link></li>
 						{logout}

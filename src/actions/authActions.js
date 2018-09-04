@@ -13,6 +13,7 @@ export function setCurrentUser(user) {
 export function logout() {
   return dispatch => {
     localStorage.removeItem('jwtToken');
+    localStorage.removeItem('Laptops');
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
   }
@@ -20,7 +21,7 @@ export function logout() {
 
 export function login(data) {
   return dispatch => {
-    return window.axios.post('http://localhost:1337/signin', data).then(res => {
+    return axios.post('http://localhost:1337/signin', data).then(res => {
       const token = res.data.token;
       if(token !== 'undefined'){
       localStorage.setItem('jwtToken', token);

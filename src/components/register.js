@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {BrowserRouter as Router, Link, Route, Redirect} from 'react-router-dom';
-import {Row, Col, Form, Button, FormGroup, FormFeedback, FormControl, InputGroup} from 'react-bootstrap'
+import {Link, Redirect} from 'react-router-dom';
+import {Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
 
 //actions
 import { userSignupRequest } from '../actions/signupActions';
@@ -37,6 +37,7 @@ class Register extends Component{
 		this.setState({
 			[e.target.name]  : e.target.value
 		})
+		match = null;
 	}
 
 	onSubmit(e){
@@ -47,14 +48,18 @@ class Register extends Component{
 		});
 		if(this.state.password ===this.state.passwordConfirmation){
 	      	this.props.userSignupRequest(this.state).then(
-	        () => {
+	        (res) => {
 	          this.props.addFlashMessage({
-	            type: 'success',
-	            text: 'You signed up successfully. Welcome!'
+	            type: res.data.type,
+	            text: res.data.message
 	          });
-	          this.setState({ 
-	        	isLoading: false,
-	        	redirect: true  })
+	          if (res.data.type == 'success'){
+		          this.setState({ 
+		        	redirect: true  })
+	      		}
+	      		this.setState({ 
+		        	isLoading: false
+		        })
 	        },
 	        (err) => {
 	        	this.setState({ 
@@ -77,7 +82,7 @@ class Register extends Component{
 	}
 
 	render(){
-		const { errors, isLoading } = this.state;
+		const { isLoading } = this.state;
 		if(this.state.redirect){
 			return <Redirect to = '/login'/>
 		}
@@ -94,40 +99,40 @@ class Register extends Component{
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Last Name</InputGroup.Addon>
-							<FormControl type='text' name='lastName' value={this.state.lastName} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='text' name='lastName' value={this.state.lastName} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>@</InputGroup.Addon>
-							<FormControl type='email' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='email' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Address</InputGroup.Addon>
-							<FormControl type='text' name='address' value={this.state.address} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='text' name='address' value={this.state.address} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Phone</InputGroup.Addon>
-							<FormControl type='text' name='phone' value={this.state.phone} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='text' name='phone' value={this.state.phone} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Password</InputGroup.Addon>
-							<FormControl type='password' name='password' value={this.state.password} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='password' name='password' value={this.state.password} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
 					<FormGroup>
 						<InputGroup>
 							<InputGroup.Addon>Confirm Password</InputGroup.Addon>
-							<FormControl type='password' name='passwordConfirmation' value={this.state.passwordConfirmation} onChange={(e)=>this.onChange.call(this, e)}/>
+							<FormControl type='password' name='passwordConfirmation' value={this.state.passwordConfirmation} onChange={(e)=>this.onChange.call(this, e)} required/>
 						</InputGroup>
 					</FormGroup>
-					<p>{match}</p>
+					<p className='match'>{match}</p>
 					<FormGroup>
 						<InputGroup className='submit'>
 							<FormControl type='submit' value='Register' disabled={isLoading}/>

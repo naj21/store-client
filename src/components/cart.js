@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Col, Row, Button} from 'react-bootstrap';
 
-
 //actions
 import { order } from '../actions/orderActions';
 
@@ -28,11 +27,11 @@ class Cart extends Component{
 	}
 
 	handleOrder(){
-		let cart = this.state.cart;
-		cart.forEach(()=>{
-		this.props.order(this.state.cart)
-		})
-		//localStore.getProxy().clear()
+		// let cart = this.state.cart;
+		// cart.forEach(()=>{
+		this.props.order(this.state.cart);
+		// })
+		localStorage.removeItem('Laptops');
 	}
 
 	componentWillMount(item){
@@ -54,11 +53,11 @@ class Cart extends Component{
 				)
 
 
-		cart = cart.map((item, index)=>{
-			return(
-				<CartItems item={item} key={index}/>
-			)
-		})
+			cart = cart.map((item, index)=>{
+				return(
+					<CartItems item={item} key={index}/>
+				)
+			})
 
 		}
 
@@ -85,7 +84,7 @@ class Cart extends Component{
 						<Row>
 							<Col xs={8} className='total'>Total</Col>
 							<Col xs={4}>{amount}</Col>
-							<Col xs={12} className='submit'><Button type='submit' onSubmit = {this.handleOrder}>Checkout</Button></Col>
+							<Col xs={12} className='submit'><Button type='submit' onClick = {this.handleOrder}>Checkout</Button></Col>
 						</Row>
 					</Col>
 				</Row>

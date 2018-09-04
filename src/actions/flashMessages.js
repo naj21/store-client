@@ -14,8 +14,9 @@ export function deleteFlashMessage(id) {
   }
  }
 
-export function deleteAllFlashMessage() {
+export function deleteAllFlashMessage(message) {
   return {
     type: DELETE_ALL_FLASH_MESSAGE,
+    message: null
   }
 }
