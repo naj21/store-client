@@ -1,48 +1,117 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
-import {Button, Row, Col, Grid} from 'react-bootstrap';
-import 'bootstrap3/dist/css/bootstrap.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import {
+  Button,
+  Row,
+  Col,
+  Grid,
+  Carousel,
+  Jumbotron,
+  Image,
+  CarouselCaption
+} from "react-bootstrap";
+import "bootstrap3/dist/css/bootstrap.css";
 
 //components
-import SideNav from './sideNav';
-import Cart from './cart';
-import Register from './register';
-import Shop from './shop';
+import SideNav from "./sideNav";
+import Cart from "./cart";
+import Register from "./register";
+import Shop from "./shop";
 
 //images
-import siteImage from '../images/samsung7.jpeg';
-import lenovo from '../images/lenovo2.jpeg';
-import samsung from '../images/samsung3.jpeg';
+import samsung from "../images/desola-lanre-ologun-709897-unsplash.jpg";
 
 //styles
-import '../styles/home.css';
+import "../styles/home.css";
 
-
-const Home = ()=>{
-	return(
-		<Grid fluid className='home'>
-			<Row>
-				<Col xs={12} className='siteImage'>
-					<img src={siteImage}/>
-				</Col>
-			</Row>
-			<Router>
-			<Row className='category'>
-				<Col xs={12} className='header'>
-					<h3>PRODUCTS</h3>
-				</Col>
-				<Col xs={12} sm={6} className='category1'>
-					<h3>LENOVO</h3>
-					<img src={samsung}/>
-				</Col>
-				<Col xs={12} sm={6} className='category2'>
-					<h3>SAMSUNG</h3>
-					<img src={lenovo}/>
-				</Col>
-			</Row>
-			</Router>
-		</Grid>
-		)
-}
+const dummySentences = [
+  "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+  "Donec hendrerit tempor tellus.",
+  "Donec pretium posuere tellus.",
+  "Proin quam nisl, tincidunt et, mattis eget, convallis nec, purus.",
+  "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  "Nulla posuere.",
+  "Donec vitae dolor.",
+  "Nullam tristique diam non turpis.",
+  "Cras placerat accumsan nulla.",
+  "Nullam rutrum.",
+  "Nam vestibulum accumsan nisl."
+];
+const Home = () => {
+  return (
+    <Grid fluid>
+      <Jumbotron className="Jumbotron text-center">
+        <h1
+          style={{
+            marginTop: "10%",
+            color: "yellow"
+          }}
+        >
+          Welcome to Rayn
+        </h1>
+        <p
+          style={{
+            color: "red"
+          }}
+        >
+          We deal in all kinds of Electronics
+        </p>
+        <p>
+          <Button bsStyle="success">
+            <Link
+              to="/register"
+              style={{
+                textDecoration: "none",
+                color: "whitesmoke"
+              }}
+            >
+              Login/Register
+            </Link>
+          </Button>
+        </p>
+      </Jumbotron>
+      <br />
+      <br />
+      <Row className="show-grid">
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 6).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 4).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 6).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 2).join(" ")}
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Row className="show-grid">
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 6).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 4).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 6).join(" ")}
+        </Col>
+        <Col sm={6} md={3}>
+          <br />
+          {dummySentences.slice(0, 2).join(" ")}
+        </Col>
+      </Row>
+    </Grid>
+  );
+};
 
 export default Home;
