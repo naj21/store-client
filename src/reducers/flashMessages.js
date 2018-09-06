@@ -1,4 +1,4 @@
-import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE, DELETE_ALL_FLASH_MESSAGE } from '../actions/actionTypes';
+import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE } from '../actions/actionTypes';
 import uuid from 'uuid/v4';
 import findIndex from 'lodash/findIndex';
 
@@ -22,11 +22,6 @@ export default (state = [], action = {}) => {
         ];
       }
       return state;
-
-    case DELETE_ALL_FLASH_MESSAGE:
-      state= null
-      return state
-        
 
     default: return state;
   }

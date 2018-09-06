@@ -1,111 +1,158 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {Col, Row, Button} from 'react-bootstrap';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Table, Grid, Row, Col, Button } from "react-bootstrap";
 
 //actions
-import { order } from '../actions/orderActions';
+import { order } from "../actions/orderActions";
 
 //components
-import CartItems from './cartItems'
+import CartItems from "./cartItems";
 
 //reucers
-import '../reducers/store'
+import "../reducers/store";
 
 //styles
-import 'bootstrap3/dist/css/bootstrap.css';
-import '../styles/cart.css'
 
-class Cart extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			name: 'hert'
-		}
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: []
+    };
 
-		this.handleOrder = this.handleOrder.bind(this);
-	}
+    this.handleOrder = this.handleOrder.bind(this);
+  }
 
-	handleOrder(){
-		// let cart = this.state.cart;
-		// cart.forEach(()=>{
-		this.props.order(this.state);
-		// })
-		localStorage.removeItem('Laptops');
-	}
+  handleOrder() {
+    let cart = this.state.cart;
+    cart.forEach(() => {
+      this.props.order(this.state.cart);
+    });
+    //localStore.getProxy().clear()
+  }
 
-	componentWillMount(item){
-		this.setState(
-			{
-			 cart : JSON.parse(localStorage.getItem('Laptops'))
-			}
-		)
-	}
+  componentWillMount(item) {
+    this.setState({
+      cart: JSON.parse(localStorage.getItem("Laptops"))
+    });
+  }
 
-	render(){
-		console.log(this.state.cart)
-		const user= this.props.users.emailAddress
-		var {cart}= this.state;
-		if(cart != null){
-			var amount = cart.reduce(
-				(sum, current)=>{
-					return sum + current.price;
-				},0
-				)
+  render() {
+    const user = this.props.users.emailAddress;
+    var { cart } = this.state;
+    if (cart != null) {
+      var amount = cart.reduce((sum, current) => {
+        return sum + current.price;
+      }, 0);
 
+      cart = cart.map((item, index) => {
+        return <CartItems item={item} key={index} />;
+      });
+    }
 
-			cart = cart.map((item, index)=>{
-				return(
-					<CartItems item={item} key={index}/>
-				)
-			})
+    return (
+      <Grid>
+        <Row>
+          <form action="http://localhost:1337/order">
+            <Col
+              className="text-center"
+              sm={12}
+              md={8}
+              lg={8}
+              lgOffset={2}
+              mdOffset={2}
+            >
+              <h2>Your Shopping Cart</h2>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Del</th>
+                  </tr>
+                </thead>
+                <tbody>{cart}</tbody>
+              </Table>
+            </Col>
+          </form>
+        </Row>
+        <Row>
+          <Col
+            md={4}
+            lg={4}
+            lgPull={2}
+            mdPull={2}
+            lgPush={2}
+            mdPush={2}
+            className="total"
+          >
+            Total:
+            {amount}
+          </Col>
+          <Col
+            md={4}
+            lg={4}
+            lgPush={2}
+            mdPush={2}
+            lgPull={2}
+            mdPull={2}
+            className="submit"
+          >
+            <Button
+              type="submit"
+              className="btn-success"
+              onSubmit={this.handleOrder}
+            >
+              Checkout
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
 
-		}
-
-		return(
-			<div className='top'>
-				<h2>Shopping Cart</h2>
-				<form action=''> 
-				<Row>
-					<Col sm={12} md={8} className='cartDetails'>
-						<Row>
-							<Col xs={6}>
-							</Col>
-							<Col xs={4}>
-								<h4>Name</h4>
-							</Col>
-							<Col xs={2}>
-								<h4>Price</h4>
-							</Col>
-						</Row>
-						{cart}				
-					</Col>
-					<Col xs={10} sm={10} md={4} className='cartTotal'>
-						<h4>Cart Total</h4>
-						<Row>
-							<Col xs={8} className='total'>Total</Col>
-							<Col xs={4}>{amount}</Col>
-							<Col xs={12} className='submit'><Button type='submit' onClick = {this.handleOrder}>Checkout</Button></Col>
-						</Row>
-					</Col>
-				</Row>
-				</form>
-			</div>
-		)
-	}
+      // <div className='top'>
+      //
+      //
+      // 	<Row>
+      // 		<Col sm={12} md={8} className='cartDetails'>
+      // 			<Row>
+      // 				<Col xs={6}>
+      // 				</Col>
+      // 				<Col xs={4}>
+      // 					<h4>Name</h4>
+      // 				</Col>
+      // 				<Col xs={2}>
+      // 					<h4>Price</h4>
+      // 				</Col>
+      // 			</Row>
+      // 			{cart}
+      // 		</Col>
+      //
+      // 	</Row>
+      // 	</form>
+      // </div>
+    );
+  }
 }
 
-function mapStateToProps(state){
-	return {
-	users: state.users
-	}
+function mapStateToProps(state) {
+  return {
+    users: state.users
+  };
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({
-		order: order
-	},
-		dispatch)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      order: order
+    },
+    dispatch
+  );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cart);

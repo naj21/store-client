@@ -1,4 +1,4 @@
-import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE , DELETE_ALL_FLASH_MESSAGE} from './actionTypes';
+import { ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE } from './actionTypes';
 
 export function addFlashMessage(message) {
   return {
@@ -11,12 +11,5 @@ export function deleteFlashMessage(id) {
   return {
     type: DELETE_FLASH_MESSAGE,
     id
-  }
- }
-
-export function deleteAllFlashMessage(message) {
-  return {
-    type: DELETE_ALL_FLASH_MESSAGE,
-    message: null
   }
 }

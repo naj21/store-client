@@ -1,100 +1,131 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
-import { connect } from 'react-redux';
-import {Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap'
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  InputGroup,
+  Col,
+  Row,
+  Grid
+} from "react-bootstrap";
 
 //actions
-import { login } from '../actions/authActions';
-import { addFlashMessage } from '../actions/flashMessages.js';
+import { login } from "../actions/authActions";
 
 //styles
-import '../styles/login.css';
-import 'bootstrap3/dist/css/bootstrap.css';
+//import "../styles/login.css";
+//import "bootstrap3/dist/css/bootstrap.css";
 
-class Login extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-				emailAddress: '',
-				password: '',
-				isLoading : false,
-				redirect : false
-		}
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailAddress: "",
+      password: "",
+      errors: {},
+      isLoading: false
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-	onChange(e){
-		this.setState({
-			[e.target.name]  : e.target.value
-		})
-	}
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
 
-	onSubmit(e){
-		e.preventDefault();
-		this.setState({
-			errors: {},
-			isLoading: true
-		});
-		this.props.login(this.state).then(
-			(res) => {
-				this.setState({
-					isLoading: false,
-					redirect: true
-				});
-				this.props.addFlashMessage({
-	            type: 'success',
-	            text: res.data.message
-	          });
-			},
-			(err) => {
-				this.setState({
-				isLoading : false
-			});
-			this.props.addFlashMessage({
-            type: 'error',
-            text: err.data.message
-          });
-			}
-		)
-	}
+  onSubmit(e) {
+    e.preventDefault();
+    this.setState({
+      errors: {},
+      isLoading: true
+    });
+    this.props.login(this.state).then(
+      res => {
+        return <Redirect to="/" />;
+        this.setState({
+          isLoading: false
+        });
+      },
+      err =>
+        this.setState({
+          errors: err.response.data.errors,
+          isLoading: false
+        })
+    );
+  }
 
-	render(){
-		const user= this.props.users.emailAddress
-		const { emailAddress, password, isLoading } = this.state;
-		if(this.state.redirect){
-			return <Redirect to = '/shop'/>
-		}
-		return(
-			<div className='top '>
-				<Form action='http://localhost:1337/signin' method='POST' className='login' onSubmit={this.onSubmit}>
-					<legend>Login</legend>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>@</InputGroup.Addon>
-							<FormControl type='text' name='emailAddress' value={emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Password</InputGroup.Addon>
-							<FormControl type='password' name='password' value={password} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup className='submit'>
-							<FormControl type='submit' value='Login' disabled={isLoading}/>
-						</InputGroup>
-					</FormGroup>
-				</Form>
-			</div>
-		)
-	}
+  render() {
+    const user = this.props.users.emailAddress;
+    const { errors, emailAddress, password, isLoading } = this.state;
+    return (
+      <Grid fluid>
+        <Row>
+          <Col
+            className="text-center"
+            sm={12}
+            md={8}
+            lg={6}
+            lgOffset={3}
+            mdOffset={2}
+          >
+            <Form
+              action="http://localhost:1337/signin"
+              method="POST"
+              className="login"
+              onSubmit={this.onSubmit}
+            >
+              <h1>Login to Rayn</h1>
+              <FormGroup>
+                <InputGroup>
+                  <InputGroup.Addon>@</InputGroup.Addon>
+                  <FormControl
+                    type="text"
+                    name="emailAddress"
+                    value={this.state.emailAddress}
+                    onChange={e => this.onChange.call(this, e)}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup>
+                  <InputGroup.Addon>Password</InputGroup.Addon>
+                  <FormControl
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={e => this.onChange.call(this, e)}
+                    required
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="submit">
+                  <FormControl
+                    type="submit"
+                    value="Login"
+                    disabled={isLoading}
+                  />
+                </InputGroup>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
 }
 
-function mapStateToProps(state){
-	return {
-	users: state.users
-	}
+function mapStateToProps(state) {
+  return {
+    users: state.users
+  };
 }
 
-export default connect((mapStateToProps), { login, addFlashMessage })(Login);
+export default connect(
+  mapStateToProps,
+  { login }
+)(Login);

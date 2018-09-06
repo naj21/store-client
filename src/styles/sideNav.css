@@ -1,5 +1,5 @@
 .links {
-	margin: 60px 0 0 -20px;
+	margin: 80px 0 0 -20px;
 	float: left;
 	width: 100%;
 }
@@ -26,9 +26,6 @@ li:first-child{
 	 color: black;
 }
 
-.link{
-	text-decoration: none;
-}
 
 .links li Link::after {
     -webkit-transition-duration: 500ms;
@@ -48,13 +45,11 @@ li:first-child{
 }
 
 .logout{
-	background-color: darkred;
+	background-color: #ffc107;
 	border-radius: 0;
-	color: #dcdcdc;
-	font-weight: bold;
 	margin-top: 40px;	
 	padding: 10px 15px;
-	opacity: 0.7;
+	opacity: 0.8;
 }
 
 pre{

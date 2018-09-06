@@ -1,73 +1,135 @@
-import React, {Component} from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
-import { connect } from 'react-redux';
-import {Provider} from 'react-redux';
-import store from '../reducers/store';
-
+import React, { Component } from "react";
+import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { Provider } from "react-redux";
+import store from "../reducers/store";
+import {
+  Button,
+  Row,
+  Col,
+  Grid,
+  Jumbotron,
+  Navbar,
+  Nav,
+  NavItem,
+  NavDropdown,
+  MenuItem
+} from "react-bootstrap";
+import "bootstrap3/dist/css/bootstrap.css";
 //actions
-import { logout } from '../actions/authActions';
-import { deleteAllFlashMessage } from '../actions/flashMessages';
+import { logout } from "../actions/authActions";
 
 //components
-import FlashMessageList from './flash/FlashMessagesList';
+import FlashMessageList from "./flash/FlashMessagesList";
 
 //styles
-import '../styles/sideNav.css'
-import 'bootstrap3/dist/css/bootstrap.css';
+import "../styles/sideNav.css";
+import "bootstrap3/dist/css/bootstrap.css";
 
-var count = 0;
-
-class SideNav extends Component{
-	handleLogout(){
-		this.props.logout();
-		<Redirect to='home'/>
-	}
-
-	componentWillMount(){
-		let number = JSON.parse(localStorage.getItem('Laptops'));
-		if (number !== null){
-			count = number.length;
-		}
-	}
-
-	handleFlash(){
-		this.props.deleteAllFlashMessage();
-	}
-
-	render(){
-		const fname = this.props.users.firstName,
-			lname = this.props.users.lastName;
-	if(this.props.isAuthenticated===true){
-        var logout =  <Button className='logout' onClick={()=>{this.handleLogout()}}>LOGOUT</Button>
-      }
-
-	return(
-			<div className='sideNav'>
-				<h1 className='logo'><Link to='/'>Rayn</Link></h1>
-				<div className='links'>
-					<pre>{fname}  {lname}</pre>
-	
-					<ul>
-						<li><Link to='/register' onClick={()=>{this.handleFlash}} className='link'> REGISTER </Link></li>
-						<li><Link to='/shop' onClick={()=>{this.handleFlash}}>SHOP</Link></li>
-						<li><Link to='/cart' onClick={()=>{this.handleFlash}}>CART ({count})</Link></li>
-						{logout}
-						<Provider store={store}><FlashMessageList/></Provider>
-					</ul>
-				</div>
-			</div>
-		)
-	}  
-}
-
-
-  function mapStateToProps(state) {
-    return {
-      isAuthenticated: state.auth.isAuthenticated,
-		users: state.users
-
-    };
+class SideNav extends Component {
+  handleLogout() {
+    this.props.logout();
+    <Redirect to="home" />;
   }
 
-  export default connect(mapStateToProps, {logout, deleteAllFlashMessage})(SideNav);
+  render() {
+    const fname = this.props.users.firstName,
+      lname = this.props.users.lastName;
+    if (this.props.isAuthenticated === true) {
+      var logout = (
+        <Button
+          className="logout"
+          onClick={() => {
+            this.handleLogout();
+          }}
+        >
+          LOGOUT
+        </Button>
+      );
+    }
+
+    return (
+      <Grid fluid={true} className="main">
+        <Row>
+          <Navbar inverse collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link
+                  to="/"
+                  style={{
+                    textDecoration: "none",
+                    color: "whitesmoke"
+                  }}
+                >
+                  Rayn
+                </Link>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav>
+              <NavItem>
+                <Link
+                  to="/register"
+                  style={{
+                    textDecoration: "none",
+                    color: "whitesmoke"
+                  }}
+                >
+                  Register{" "}
+                </Link>
+              </NavItem>
+              <NavItem>
+                <Link
+                  to="/login"
+                  style={{
+                    textDecoration: "none",
+                    color: "whitesmoke"
+                  }}
+                >
+                  Login{" "}
+                </Link>
+              </NavItem>
+              <NavItem>
+                <Link
+                  to="/shop"
+                  style={{
+                    textDecoration: "none",
+                    color: "whitesmoke"
+                  }}
+                >
+                  Shop
+                </Link>
+              </NavItem>
+              <NavItem>
+                <Link
+                  to="/cart"
+                  style={{
+                    textDecoration: "none",
+                    color: "whitesmoke"
+                  }}
+                >
+                  Cart
+                </Link>
+              </NavItem>
+              <NavItem>{logout}</NavItem>
+            </Nav>
+          </Navbar>
+          <Provider store={store}>
+            <FlashMessageList />
+          </Provider>
+        </Row>
+      </Grid>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    users: state.users
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(SideNav);
