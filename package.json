@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
+    "axios": "^0.18.0",
+    "bootstrap3": "^3.3.5",
+=======
     "aviator": "^0.6.6",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
@@ -14,6 +18,7 @@
     "create-react-class": "^15.6.3",
     "crypto-js": "^3.1.9-1",
     "elemental": "^0.6.1",
+>>>>>>> ea9176f35304bcf10d21e86aceb7b390583a285c
     "jwt-decode": "^2.2.0",
     "less-compile-file": "^1.0.1",
     "moment": "^2.22.2",
@@ -26,6 +31,14 @@
     "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.4.1",
+<<<<<<< HEAD
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.3.2"
+=======
     "react-elemental": "^1.2.0",
     "react-loadable": "^5.5.0",
     "react-loader-spinner": "^2.1.0",
@@ -38,6 +51,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.3.0"
+>>>>>>> ea9176f35304bcf10d21e86aceb7b390583a285c
   },
   "scripts": {
     "start": "react-scripts start",
