@@ -20,7 +20,7 @@ class Cart extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			cart: []
+			name: 'hert'
 		}
 
 		this.handleOrder = this.handleOrder.bind(this);
@@ -29,7 +29,7 @@ class Cart extends Component{
 	handleOrder(){
 		// let cart = this.state.cart;
 		// cart.forEach(()=>{
-		this.props.order(this.state.cart);
+		this.props.order(this.state);
 		// })
 		localStorage.removeItem('Laptops');
 	}
@@ -43,6 +43,7 @@ class Cart extends Component{
 	}
 
 	render(){
+		console.log(this.state.cart)
 		const user= this.props.users.emailAddress
 		var {cart}= this.state;
 		if(cart != null){
@@ -64,7 +65,7 @@ class Cart extends Component{
 		return(
 			<div className='top'>
 				<h2>Shopping Cart</h2>
-				<form action='http://localhost:1337/order'> 
+				<form action=''> 
 				<Row>
 					<Col sm={12} md={8} className='cartDetails'>
 						<Row>

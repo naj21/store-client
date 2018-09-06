@@ -26,6 +26,9 @@ li:first-child{
 	 color: black;
 }
 
+.link{
+	text-decoration: none;
+}
 
 .links li Link::after {
     -webkit-transition-duration: 500ms;

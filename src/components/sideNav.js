@@ -49,7 +49,7 @@ class SideNav extends Component{
 					<pre>{fname}  {lname}</pre>
 	
 					<ul>
-						<li><Link to='/register' onClick={()=>{this.handleFlash}}> REGISTER </Link></li>
+						<li><Link to='/register' onClick={()=>{this.handleFlash}} className='link'> REGISTER </Link></li>
 						<li><Link to='/shop' onClick={()=>{this.handleFlash}}>SHOP</Link></li>
 						<li><Link to='/cart' onClick={()=>{this.handleFlash}}>CART ({count})</Link></li>
 						{logout}
