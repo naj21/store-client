@@ -14,25 +14,11 @@ class CartItems extends Component {
           <h4>{this.props.item.price}</h4>
         </td>
         <td>
-          <h4>{this.props.item.qty}</h4>
-        </td>
-        <td>
           <Button>
             <Glyphicon glyph="minus" />
           </Button>
         </td>
       </tr>
-      // <Row className='items'>
-      // 	<Col xs={6}>
-      //
-      // 	</Col>
-      // 	<Col xs={4}>
-      //
-      // 	</Col>
-      // 	<Col xs={2}>
-      //
-      // 	</Col>
-      // </Row>
     );
   }
 }

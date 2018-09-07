@@ -11,7 +11,7 @@ import "../reducers/store";
 import "bootstrap3/dist/css/bootstrap.css";
 import "../styles/shop.css";
 
-var laptops = [];
+const laptops = [];
 
 class Shop extends Component {
   constructor(props) {
@@ -39,13 +39,10 @@ class Shop extends Component {
 
   handleAdd(item) {
     laptops.push(item);
-    var laptop = [];
-    for (let i = 0; i < laptops.length; i++) {
-      if (laptop.indexOf(laptops[i]) === -1) {
-        laptop.push(laptops[i]);
-      }
-    }
-    localStorage.setItem("Laptops", JSON.stringify(laptop));
+    localStorage.setItem(
+      "Laptops",
+      JSON.stringify({ laptops: { ...laptops } })
+    );
   }
 
   render() {

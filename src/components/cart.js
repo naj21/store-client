@@ -20,33 +20,28 @@ class Cart extends Component {
     this.state = {
       cart: []
     };
-
-    this.handleOrder = this.handleOrder.bind(this);
   }
 
-  handleOrder() {
-    let cart = this.state.cart;
-    cart.forEach(() => {
-      this.props.order(this.state.cart);
-    });
-    //localStore.getProxy().clear()
-  }
-
-  componentWillMount(item) {
-    this.setState({
-      cart: JSON.parse(localStorage.getItem("Laptops"))
-    });
-  }
-
+  handleOrder = orders => {
+    this.props.order(orders);
+  };
   render() {
     const user = this.props.users.emailAddress;
-    var { cart } = this.state;
-    if (cart != null) {
-      var amount = cart.reduce((sum, current) => {
-        return sum + current.price;
-      }, 0);
-
-      cart = cart.map((item, index) => {
+    const order = [];
+    let list = "";
+    const cart = JSON.parse(localStorage.getItem("Laptops"));
+    let amount = 0;
+    if (cart !== null) {
+      const { laptops } = cart;
+      for (const laptop in laptops) {
+        if (laptops.hasOwnProperty(laptop)) {
+          const element = laptops[laptop];
+          console.log(element);
+          amount += element.price;
+          order.push(element);
+        }
+      }
+      list = order.map((item, index) => {
         return <CartItems item={item} key={index} />;
       });
     }
@@ -74,7 +69,7 @@ class Cart extends Component {
                     <th>Del</th>
                   </tr>
                 </thead>
-                <tbody>{cart}</tbody>
+                <tbody>{list}</tbody>
               </Table>
             </Col>
           </form>
@@ -104,7 +99,7 @@ class Cart extends Component {
             <Button
               type="submit"
               className="btn-success"
-              onSubmit={this.handleOrder}
+              onSubmit={this.handleOrder(order)}
             >
               Checkout
             </Button>
