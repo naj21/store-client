@@ -36,7 +36,6 @@ class Cart extends Component {
       for (const laptop in laptops) {
         if (laptops.hasOwnProperty(laptop)) {
           const element = laptops[laptop];
-          console.log(element);
           amount += element.price;
           order.push(element);
         }
@@ -65,7 +64,6 @@ class Cart extends Component {
                     <th>#</th>
                     <th>Name</th>
                     <th>Price</th>
-                    <th>Qty</th>
                     <th>Del</th>
                   </tr>
                 </thead>
