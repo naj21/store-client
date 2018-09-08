@@ -1,0 +1,13 @@
+.top {
+	padding: 60px 0 40px 0;
+}
+
+.match{
+	color: red;
+	text-align: center;
+}
+
+.submit{
+	margin: auto;
+	margin-top: 10px;
+}
