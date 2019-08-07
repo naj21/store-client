@@ -1,5 +1,7 @@
 .top {
-	padding: 60px 0 40px 0;
+	width: 40%;
+	background: #F3F3F5;
+	box-shadow: 0 0 10px #dcdcdc;
 }
 
 .match{
@@ -8,6 +10,35 @@
 }
 
 .submit{
-	margin: auto;
-	margin-top: 10px;
+	float: right;
+	margin-top: 40px;
+}
+
+.submit button{
+	background-color: #4b4b4b;
+	padding: 10px 20px;
+	opacity: 0.6;
+	color: white;
+	margin-bottom: 20px;
+}
+
+.submit button:hover{
+	background-color: #4b4b4b;
+	opacity: 0.8;
+}
+
+.content {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.bg-image {
+	width: 60%;
+	background: #F3F3F5;
+}
+
+.bg-image img {
+	width: 100%;
+	height: inherit;
 }

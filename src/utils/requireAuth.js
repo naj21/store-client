@@ -21,7 +21,7 @@ export default function(ComposedComponent) {
 
     render() {
       if(this.props.isAuthenticated===false){
-        return <Redirect to='/'/>
+        return <Redirect to='/login'/>
       }
       return (
         <ComposedComponent {...this.props} />

@@ -1,9 +1,5 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {Row, Col, Grid} from 'react-bootstrap';
-import 'bootstrap3/dist/css/bootstrap.css';
-import {Provider} from 'react-redux';
-import store from '../reducers/store';
 
 //components
 import Home from './home';
@@ -47,36 +43,23 @@ const routes = [
 
 const Main = ()=>{
 	return(
-		<Provider store={store}>
 		<Router>
-			<Grid fluid={true} className='main'>
-				<Row>
-					<Col sm={4} md={3} className='sideNav'>
-						<SideNav/>
-					</Col>
-					<Col sm={8} md={9}>
-							<div>
-								{routes.map((route, index)=>(
-									<Route
-										key={index}
-										path={route.path}
-										exact={route.exact}
-										component={route.main}
-									/>
-								))}
-							</div>
-					</Col>
-				</Row>
-				<Row>
-					<Col xs={12} className='footer'>
-						<h3>Rayn</h3>
-						<p>Copyright@2018 by NAJ</p>
-					</Col>
-				</Row>
-				</Grid>	
-			</Router>
-		</Provider>
-		)
+			<div className="main">
+				<SideNav/>
+				
+				<div className="content">
+					{routes.map((route, index)=>(
+						<Route
+							key={index}
+							path={route.path}
+							exact={route.exact}
+							component={route.main}
+						/>
+					))}
+				</div>
+			</div>
+		</Router>
+	)
 }
 
 export default Main;

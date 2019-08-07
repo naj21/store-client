@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Grid, Row, Col, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 //actions
 import { order } from "../actions/orderActions";
@@ -31,7 +31,6 @@ class Cart extends Component {
     localStorage.removeItem('Laptops')
   };
   render() {
-    const user = this.props.users.emailAddress;
     const order = [];
     let list = "";
     const cart = JSON.parse(localStorage.getItem("Laptops"));
@@ -51,31 +50,30 @@ class Cart extends Component {
     }
 
    return(
-		<div className='top'>
+		<div className='cart'>
 			<h2>Shopping Cart</h2> 
-			<Row>
-				<Col sm={12} md={8} className='cartDetails'>
-					<Row>
-						<Col xs={4}>
-						</Col>
-						<Col xs={4}>
+			<div className='cartInfo'>
+				<div className='cartDetails'>
+					<div className='cartHeader'>
+            <div></div>
+						<div>
 							<h4>Name</h4>
-						</Col>
-						<Col xs={2}>
+						</div>
+						<div>
 							<h4>Price</h4>
-						</Col>
-					</Row>
+						</div>
+					</div>
 					{list}				
-				</Col>
-				<Col xs={10} sm={10} md={4} className='cartTotal'>
+				</div>
+				<div className='cartTotal'>
 					<h4>Cart Total</h4>
-					<Row>
-						<Col xs={8} className='total'>Total</Col>
-						<Col xs={4}>{amount}</Col>
-						<Col xs={12} className='submit'><Button type='submit' onClick = {this.handleOrder(order)}>Checkout</Button></Col>
-					</Row>
-				</Col>
-			</Row>
+					<div className='total'>
+						<div>Total</div>
+						<div>{amount}</div>
+          </div>
+					<div className='submit'><Button type='submit' onClick = {this.handleOrder(order)}>Checkout</Button></div>
+				</div>
+			</div>
 		</div>
 	)
   }

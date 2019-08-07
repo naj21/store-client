@@ -45,47 +45,50 @@ class Login extends Component{
 	            type: 'success',
 	            text: res.data.message
 	          });
-			},
-			(err) => {
+			})
+			.catch((err) => {
 				this.setState({
-				isLoading : false
-			});
-			this.props.addFlashMessage({
-            type: 'error',
-            text: err.data.message
-          });
-			}
-		)
+					isLoading : false
+				});
+				this.props.addFlashMessage({
+					type: 'error',
+					text: err.message 
+				});
+			})
 	}
 
 	render(){
-		const user= this.props.users.emailAddress
 		const { emailAddress, password, isLoading } = this.state;
 		if(this.state.redirect){
 			return <Redirect to = '/shop'/>
 		}
 		return(
-			<div className='top '>
-				<Form action='http://localhost:1337/signin' method='POST' className='login' onSubmit={this.onSubmit}>
-					<legend>Login</legend>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>@</InputGroup.Addon>
-							<FormControl type='text' name='emailAddress' value={emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Password</InputGroup.Addon>
-							<FormControl type='password' name='password' value={password} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup className='submit'>
-							<FormControl type='submit' value='Login' disabled={isLoading}/>
-						</InputGroup>
-					</FormGroup>
-				</Form>
+			<div className="content">
+				<div className="bg-image">
+					<img src="https://images.unsplash.com/photo-1488485339565-566d63f7dbb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="login" />
+				</div>
+				<div className='top '>
+					<Form className='login' onSubmit={this.onSubmit}>
+						<legend>Login</legend>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>@</InputGroup.Addon>
+								<FormControl type='text' name='emailAddress' value={emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Password</InputGroup.Addon>
+								<FormControl type='password' name='password' value={password} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup className='submit'>
+								<button type='submit' disabled={isLoading}>Login</button>
+							</InputGroup>
+						</FormGroup>
+					</Form>
+				</div>
 			</div>
 		)
 	}

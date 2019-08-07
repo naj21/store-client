@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StaticRouter as Router} from 'react-router-dom';
-import {Button, Col, Row, Glyphicon} from 'react-bootstrap';
+import {Button, Glyphicon} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 //reducers
@@ -51,33 +51,31 @@ class Shop extends Component{
 		var {items} = this.state;
 		items = items.map((item, index)=>{
 			return(
-				<Col sm={6} lg={4} className='items'>
+				<div className='item'>
 					<img src={item.image} alt={item.name}/>
-					<Col xs={8} className='itemName'>
-						<Row>₦{item.price}</Row>
-						<Row>{item.name}</Row>
-					</Col>
-					<Col xs={2} xsOffset={2} className='cartLink'>
-						<Button onClick={()=>{this.handleAdd(item)}}><Glyphicon glyph='shopping-cart'/></Button>
-					</Col>		
-				</Col>
+					<div className="itemDetails">
+						<div className='itemName'>
+							<div>₦{item.price}</div>
+							<div>{item.name}</div>
+						</div>
+						<button onClick={()=>{this.handleAdd(item)}}><Glyphicon glyph='shopping-cart'/></button>
+					</div>		
+				</div>
 			)
 		})
 
 		return(
 			<Router>
-				<Row className='top'>
-					<div className = 'shop'>
-						<h2>Shop</h2>
-						<Col xs={12} className='brand'>
-							<Button onClick={this.changeLenovo}>Lenovo</Button>
-							<Button onClick={this.changeSamsung}>Samsung</Button>
-						</Col>
-						<Row>
-							{items}
-						</Row>
+				<div className = 'shop'>
+					<h2>Shop</h2>
+					<div className='brand'>
+						<Button onClick={this.changeLenovo}>Lenovo</Button>
+						<Button onClick={this.changeSamsung}>Samsung</Button>
 					</div>
-				</Row>
+					<div className="items">
+						{items}
+					</div>
+				</div>
 			</Router>
 		)
 	}

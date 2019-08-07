@@ -2,13 +2,6 @@ h1:first-child{
 	text-align: center;
 }
 
-
-Row, Col{
-	padding-left: 0px;
-	padding-right: 0px;
-
-}
-
 .category > .header{
 	text-decoration: underline;
 }
@@ -18,17 +11,67 @@ Row, Col{
 	width: 100%;
 }
 
-.Jumbotron {
-  background-image: url("../images/desola-lanre-ologun-709897-unsplash.jpg");
-  background-repeat: no-repeat;
-  width: inherit;
-  height: 70vh;
-  margin-top: 0;
-  border-radius: 0;
+.hero {
+  display: flex;
+  background-color: antiquewhite;
+  width: 100%;
+  height: inherit; 
+  margin-top: 40px;
 }
 
-.siteImage img{
-	width: 100%;
-	height: 280px;
+
+.left {
+	background: url("https://images.unsplash.com/photo-1561517146-815245fcbfde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+	 background-size: cover;
+	 width: 60%;
+	 animation: cover 10s infinite;
 }
 
+.right {
+	width: 40%;
+	background: #4b4b4b;
+	box-shadow: 0 0 10px #8c8888;
+}
+
+.details {
+	padding-top: 60px;
+	max-width: 350px;
+	margin: auto;
+	font-weight: 900;
+	color: white;
+}
+
+.details button {
+	margin-top: 40px;
+	outline: none;
+	background: none;
+	border: 2px solid white;
+	height: 60px;
+	transition: 0.4s;
+}
+
+.details button > * {
+	color: white;
+	padding: 20px 40px;
+}
+
+.details button:hover {
+	background: white;
+}
+
+.details button:hover > a{
+	color: #4b4b4b;
+	background: none;
+}
+
+
+@keyframes cover {
+	30% {
+	  background: url("https://images.unsplash.com/photo-1499673610122-01c7122c5dcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+	  background-size: cover;
+  	}
+	70% {
+	  background: url("https://images.unsplash.com/photo-1445620466293-d6316372ab59?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+	  background-size: cover;
+	}
+}

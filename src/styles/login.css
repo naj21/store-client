@@ -6,21 +6,36 @@ h3{
 	font-weight: bold;
 }
 
-.submit :first-child{
+.content {
 	width: 100%;
-	background-color: blue;
-	opacity: 0.6;
-	margin: auto;
-	color: white;
+	display: flex;
+	justify-content: space-between;
 }
 
-.submit :hover{
-	opacity: 0.8;
+.bg-image {
+	width: 60%;
+	background: #F3F3F5;
 }
+
+.bg-image img {
+	width: 100%;
+	height: inherit;
+}
+
+.top {
+	padding-top: 40px;
+	width: 40%;
+	background: #F3F3F5;
+	box-shadow: 0 0 10px #dcdcdc;
+}
+
+form {
+	margin: auto;
+}
+
 @media only screen and (min-width: 400px){
 	.login{
 		width: 300px;
-		float: right;
 		padding: 0 20px
 	}
 }

@@ -53,7 +53,7 @@ class Register extends Component{
 	            type: res.data.type,
 	            text: res.data.message
 	          });
-	          if (res.data.type == 'success'){
+	          if (res.data.type === 'success'){
 		          this.setState({ 
 		        	redirect: true  })
 	      		}
@@ -87,59 +87,64 @@ class Register extends Component{
 			return <Redirect to = '/login'/>
 		}
 		return(
-			<div className='top'>
-				<Form action='http://localhost:1337/signup' method='POST' className='login' onSubmit={this.onSubmit}>
-					<legend>Register</legend>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>First Name</InputGroup.Addon>
-							<FormControl type='text' name='firstName' value={this.state.firstName} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Last Name</InputGroup.Addon>
-							<FormControl type='text' name='lastName' value={this.state.lastName} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>@</InputGroup.Addon>
-							<FormControl type='email' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Address</InputGroup.Addon>
-							<FormControl type='text' name='address' value={this.state.address} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Phone</InputGroup.Addon>
-							<FormControl type='text' name='phone' value={this.state.phone} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Password</InputGroup.Addon>
-							<FormControl type='password' name='password' value={this.state.password} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<FormGroup>
-						<InputGroup>
-							<InputGroup.Addon>Confirm Password</InputGroup.Addon>
-							<FormControl type='password' name='passwordConfirmation' value={this.state.passwordConfirmation} onChange={(e)=>this.onChange.call(this, e)} required/>
-						</InputGroup>
-					</FormGroup>
-					<p className='match'>{match}</p>
-					<FormGroup>
-						<InputGroup className='submit'>
-							<FormControl type='submit' value='Register' disabled={isLoading}/>
-							<Link to='/login'>Already a member?</Link>	
-						</InputGroup>
-					</FormGroup>
-				</Form>
+			<div className="content">
+				<div className="bg-image">
+					<img src="https://images.unsplash.com/photo-1488485339565-566d63f7dbb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="login" />
+				</div>
+				<div className='top'>
+					<Form className='login' onSubmit={this.onSubmit}>
+						<legend>Register</legend>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>First Name</InputGroup.Addon>
+								<FormControl type='text' name='firstName' value={this.state.firstName} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Last Name</InputGroup.Addon>
+								<FormControl type='text' name='lastName' value={this.state.lastName} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>@</InputGroup.Addon>
+								<FormControl type='email' name='emailAddress' value={this.state.emailAddress} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Address</InputGroup.Addon>
+								<FormControl type='text' name='address' value={this.state.address} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Phone</InputGroup.Addon>
+								<FormControl type='text' name='phone' value={this.state.phone} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Password</InputGroup.Addon>
+								<FormControl type='password' name='password' value={this.state.password} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Addon>Confirm Password</InputGroup.Addon>
+								<FormControl type='password' name='passwordConfirmation' value={this.state.passwordConfirmation} onChange={(e)=>this.onChange.call(this, e)} required/>
+							</InputGroup>
+						</FormGroup>
+						<p className='match'>{match}</p>
+						<FormGroup>
+							<InputGroup className='submit'>
+								<button type='submit' disabled={isLoading}>Register</button>
+								<Link to='/login'>Already a member?</Link>	
+							</InputGroup>
+						</FormGroup>
+					</Form>
+				</div>
 			</div>
 		)
 	}

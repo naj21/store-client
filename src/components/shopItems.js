@@ -39,16 +39,16 @@ class ShopItems extends Component{
 		// })
 
 	return(
-	<Col sm={6} lg={4} className='items'>
+	<div className='items'>
 		<img src={this.props.item.image}/>
-		<Col xs={8} className='itemName'>
-			<Row>₦{this.props.item.price}</Row>
-			<Row>{this.props.item.name}</Row>
-		</Col>
-		<Col xs={2} xsOffset={2} className='cartLink'>
+		<div className='itemName'>
+			<div>₦{this.props.item.price}</div>
+			<div>{this.props.item.name}</div>
+		</div>
+		<div className='cartLink'>
 			<Button onClick={()=>{this.props.dispatch(this.props.item)}}><Glyphicon glyph='shopping-cart'/></Button>
-		</Col>		
-	</Col>
+		</div>		
+	</div>
 	)
 }
 }
