@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link, Redirect} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 //actions
@@ -28,14 +27,14 @@ class SideNav extends Component{
       } else {
 		  link = <Link to='/register' activeStyle={{color: 'blue'}}> REGISTER </Link>
 	  }
-
 	return(
 			<div className='sideNav'>
 				<h1 className='logo'><Link to='/' style={{textDecoration:'none'}} 
 				activeStyle={{color: 'blue'}}>Rayn</Link></h1>
 				{link}
+				<Link to='/shop'>SHOP</Link>
 				<Link to='/cart'>CART</Link>
-				<span hidden={!this.props.isAuthenticated}>{fname}.{lname}</span>
+				<span className={!this.props.isAuthenticated && 'hide'}>{fname}.{lname}</span>
 			</div>
 		)
 	}  

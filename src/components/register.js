@@ -63,12 +63,11 @@ class Register extends Component{
 	        },
 	        (err) => {
 	        	this.setState({ 
-	        	errors: err.response.data.details, 
 	        	isLoading: false,
 	        	});
 	        	this.props.addFlashMessage({
-	            type: 'error',
-	            text: this.state.errors
+					type: err.response.data.type,
+					text: err.response.data.message
 	          });
 	    	}
 	      );
@@ -82,9 +81,13 @@ class Register extends Component{
 	}
 
 	render(){
+		var loading = 'Register'
 		const { isLoading } = this.state;
 		if(this.state.redirect){
 			return <Redirect to = '/login'/>
+		}
+		if(isLoading){
+			loading = 'Loading...'
 		}
 		return(
 			<div className="content">
@@ -139,7 +142,7 @@ class Register extends Component{
 						<p className='match'>{match}</p>
 						<FormGroup>
 							<InputGroup className='submit'>
-								<button type='submit' disabled={isLoading}>Register</button>
+								<button type='submit' disabled={isLoading}>{loading}</button>
 								<Link to='/login'>Already a member?</Link>	
 							</InputGroup>
 						</FormGroup>

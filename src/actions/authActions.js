@@ -23,11 +23,13 @@ export function login(data) {
   return dispatch => {
     return axios.post('https://naj-store-server.herokuapp.com/signin', data).then(res => {
       const token = res.data.token;
-      if(token !== 'undefined'){
+      if(token !== undefined){
       localStorage.setItem('jwtToken', token);
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
     }
+    const data = {message: res.data.message, type: res.data.type}
+    return data;
     });
   }
 }

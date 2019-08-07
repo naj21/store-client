@@ -43,7 +43,7 @@ class Login extends Component{
 				});
 				this.props.addFlashMessage({
 	            type: 'success',
-	            text: res.data.message
+	            text: res.message
 	          });
 			})
 			.catch((err) => {
@@ -51,16 +51,20 @@ class Login extends Component{
 					isLoading : false
 				});
 				this.props.addFlashMessage({
-					type: 'error',
-					text: err.message 
+					type: err.response.data.type,
+					text: err.response.data.message
 				});
 			})
 	}
 
 	render(){
+		var loading = 'Login'
 		const { emailAddress, password, isLoading } = this.state;
 		if(this.state.redirect){
 			return <Redirect to = '/shop'/>
+		}
+		if(isLoading){
+			loading = 'Loading...'
 		}
 		return(
 			<div className="content">
@@ -84,7 +88,7 @@ class Login extends Component{
 						</FormGroup>
 						<FormGroup>
 							<InputGroup className='submit'>
-								<button type='submit' disabled={isLoading}>Login</button>
+								<button type='submit' disabled={isLoading}>{loading}</button>
 							</InputGroup>
 						</FormGroup>
 					</Form>
@@ -94,10 +98,5 @@ class Login extends Component{
 	}
 }
 
-function mapStateToProps(state){
-	return {
-	users: state.users
-	}
-}
 
-export default connect((mapStateToProps), { login, addFlashMessage })(Login);
+export default connect(null, { login, addFlashMessage })(Login);
